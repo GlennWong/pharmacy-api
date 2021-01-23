@@ -11,41 +11,41 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-
+// TODO: fixit
 //    @Autowired
-    private UserService service;
+    private UserService userService;
 
     @GetMapping
     public ResponseEntity<List<?>> findAll() {
-        List<?> list = service.findAll();
+        List<?> list = userService.findAll();
         return ResponseEntity.ok().body(list);
     }
 
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
-        User user = service.findById(id);
+        User user = userService.findById(id);
         return ResponseEntity.ok().body(user);
     }
 
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody User user) {
-        User savedUser = service.save(user);
+        User savedUser = userService.save(user);
         return ResponseEntity.ok().body(savedUser);
     }
 
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody User user) {
-        User updatedUser = service.update(user);
+        User updatedUser = userService.update(user);
         return ResponseEntity.ok().body(updatedUser);
     }
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable int id) {
-        service.delete(id);
+        userService.delete(id);
         return ResponseEntity.ok().body("Deleted successfully...!");
     }
 }

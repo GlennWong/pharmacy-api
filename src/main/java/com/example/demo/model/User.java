@@ -1,11 +1,8 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -14,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table
+@Table(name = "user")
 public class User implements Serializable {
 
     @Id
@@ -23,5 +20,12 @@ public class User implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "user_pharmacy",
+        joinColumns = {@JoinColumn(name = "user_id")},
+        inverseJoinColumns = {@JoinColumn(name = "pharmacy_id")}
+    )
+    public List<Pharmacy> pharmacies;
 }
 
