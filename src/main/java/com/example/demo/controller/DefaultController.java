@@ -9,7 +9,7 @@ import java.net.URI;
 @RestController
 public class DefaultController {
 
-    @GetMapping("/")
+    @GetMapping("/abc")
     public String index() {
         return "<a href='https://github.com/login/oauth/authorize?client_id=Iv1.335d9234a445e1eb'>Github Login</a>" +
             "<br>" +
