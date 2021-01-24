@@ -19,19 +19,18 @@ public class DemoApplication extends WebSecurityConfigurerAdapter {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
         http
             .authorizeRequests(a -> a
-                .antMatchers("/", "/users", "/**")
+                .antMatchers("/", "/users/**", "/pharmacies/**")
                 .permitAll()
                 .anyRequest().authenticated()
             )
-            .exceptionHandling(e -> e
-                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-            )
+            // .exceptionHandling(e -> e
+            //     .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+            // )
             .oauth2Login();
 //            .loginPage("/login").userInfoEndpoint().userService(oauth2UserService);
         // @formatter:on

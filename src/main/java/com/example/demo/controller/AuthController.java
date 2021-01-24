@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.api.github.Github;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
-public class HelloController {
+public class AuthController {
     @Autowired
     private ClientRegistrationRepository clientRegistrationRepository;
 
@@ -25,20 +26,21 @@ public class HelloController {
     @Autowired
     Github github;
 
-    @GetMapping(value = "/")
+    @GetMapping(value = "/auth/index")
     public String index() {
         log.info(SecurityContextHolder.getContext().getAuthentication().toString());
-        return "Welcome " + SecurityContextHolder.getContext().getAuthentication();
+//        return "Welcome " + SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return "Welcome " + SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
     }
 
-    @GetMapping(value = "/user/reg")
+    @GetMapping(value = "/auth/reg")
     public String registration() {
         ClientRegistration githubRegistration = this.clientRegistrationRepository.findByRegistrationId("github");
         log.info(githubRegistration.toString());
         return githubRegistration.toString();
     }
 
-    @GetMapping(value = "/user/token")
+    @GetMapping(value = "/auth/token")
     public OAuth2AccessToken accessToken(OAuth2AuthenticationToken authentication) {
         OAuth2AuthorizedClient authorizedClient = this.authorizedClientService.loadAuthorizedClient(
                 authentication.getAuthorizedClientRegistrationId(), authentication.getName());
@@ -46,7 +48,7 @@ public class HelloController {
         return accessToken;
     }
 
-    @GetMapping(value = "/user/info")
+    @GetMapping(value = "/auth/info")
     public String info() {
         String profile = github.getProfile();
         log.info(github.getProfile());
