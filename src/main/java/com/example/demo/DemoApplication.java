@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
@@ -14,18 +15,21 @@ public class DemoApplication extends WebSecurityConfigurerAdapter {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
-//        http
-//            .authorizeRequests(a -> a
-//                .antMatchers("/", "/users", "/**").permitAll()
-//                .anyRequest().authenticated()
-//            )
-//            .exceptionHandling(e -> e
-//                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-//            )
-//            .oauth2Login();
+        http
+            .authorizeRequests(a -> a
+                .antMatchers("/", "/users", "/**")
+                .permitAll()
+                .anyRequest().authenticated()
+            )
+            .exceptionHandling(e -> e
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+            )
+            .oauth2Login();
+//            .loginPage("/login").userInfoEndpoint().userService(oauth2UserService);
         // @formatter:on
     }
 }
