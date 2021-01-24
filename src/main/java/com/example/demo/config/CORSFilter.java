@@ -1,4 +1,4 @@
-package com.spring.crud.demo.config;
+package com.example.demo.config;
 
 import java.io.IOException;
 
